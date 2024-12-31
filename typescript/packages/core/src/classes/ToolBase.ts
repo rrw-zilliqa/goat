@@ -58,9 +58,11 @@ export function createTool<TParameters extends z.ZodSchema, TResult = any>(
     config: ToolConfig<TParameters>,
     execute: (parameters: z.infer<TParameters>) => TResult | Promise<TResult>,
 ) {
-    return new (class extends ToolBase<TParameters, TResult> {
+  var result = new (class extends ToolBase<TParameters, TResult> {
         execute(parameters: z.infer<TParameters>): TResult | Promise<TResult> {
             return execute(parameters);
         }
-    })(config);
+  })(config);
+  console.log(`CREATETOOL - ${JSON.stringify(result)}`);
+  return result;
 }
