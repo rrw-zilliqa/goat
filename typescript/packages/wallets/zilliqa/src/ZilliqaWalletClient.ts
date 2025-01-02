@@ -53,6 +53,10 @@ export class ZilliqaWalletClient extends WalletClientBase {
   getZilliqa(): Zilliqa {
     return this.zilliqa;
   }
+
+  getViemClient(): ViemEVMWalletClient {
+    return this.viem;
+  }
 }
 
 

@@ -6,6 +6,7 @@ import { Zilliqa } from "@zilliqa-js/zilliqa";
 import { ZilliqaWalletClient } from "@goat-sdk/wallet-zilliqa";
 import { toBech32Address, fromBech32Address, toChecksumAddress } from "@zilliqa-js/crypto";
 import { BN, Long, units as ZilliqaUnits, validation as ZilliqaValidation } from "@zilliqa-js/util";
+import * as viem from "viem";
 
 
 export class ZilliqaService {
@@ -27,6 +28,24 @@ export class ZilliqaService {
   async convertFromBech32(zilliqa: ZilliqaWalletClient, address: AddressParameters) : Promise<string> {
     console.log("SOUP");
     return fromBech32Address(address.address);
+  }
+
+  @Tool({
+    description: "Transfers ZIL from an EVM address to another EVM or Zilliqa address, in either hex or bech32 format. Never use any other transfer functions when transferring funds from an EVM address"
+  })
+  async transferFromEvmAddress(zilliqa: ZilliqaWalletClient, transferParameters: TransferParameters): Promise<string> {
+    try {
+      let hexToAddress = ZilliqaValidation.isBech32(transferParameters.toAddress) ?
+        fromBech32Address(transferParameters.toAddress) : transferParameters.toAddress;
+      let summed = viem.getAddress(hexToAddress);
+      const amount = viem.parseEther(transferParameters.amount);
+      const tx = await zilliqa.viem.sendTransaction({
+        to: summed,
+        value: amount });
+      return tx.hash;
+    } catch (error) {
+      throw new Error(`Failed to send ZIL: ${error}`);
+    }
   }
 
   @Tool({
