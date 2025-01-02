@@ -1,17 +1,15 @@
 import { type Chain, PluginBase } from "@goat-sdk/core";
-import type { EVMWalletClient } from "@goat-sdk/wallet-evm";
+import type { ZilliqaWalletClient } from "@goat-sdk/wallet-zilliqa";
 import { ZilliqaService } from "./zilliqa.service";
 import { ZilliqaPluginParams } from "./types";
 
 
-export class ZilliqaPlugin extends PluginBase<EVMWalletClient> {
+export class ZilliqaPlugin extends PluginBase<ZilliqaWalletClient> {
   constructor(params: ZilliqaPluginParams) {
     super("zilliqa", [new ZilliqaService(params)]);
-    console.log("**** *CONSTRUCTING");
   }
 
-  // @todo Make this Zilliqa only
-  supportsChain = (chain: Chain) => chain.type == "evm";
+  supportsChain = (chain: Chain) => chain.type == "zilliqa";
 }
 
 export function zilliqa(params: ZilliqaPluginParams) {

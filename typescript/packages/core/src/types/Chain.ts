@@ -2,7 +2,7 @@
  * @param type - "evm" or "solana", extend this union as needed (e.g., "sui")
  * @param id - Chain ID, optional for EVM
  */
-export type Chain = EvmChain | SolanaChain | AptosChain | ChromiaChain | FuelChain;
+export type Chain = EvmChain | SolanaChain | AptosChain | ChromiaChain | FuelChain | ZilliqaChain;
 
 export type EvmChain = {
     type: "evm";
@@ -24,3 +24,10 @@ export type ChromiaChain = {
 export type FuelChain = {
     type: "fuel";
 };
+
+export type ZilliqaChain= {
+  type: "zilliqa",
+  id: number,
+  evmId: number
+};
+
