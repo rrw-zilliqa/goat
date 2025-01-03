@@ -10,16 +10,19 @@
     },
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "dependencies": {
-        "@goat-sdk/wallet-evm": "workspace:*",
-        "viem": "catalog:"
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@goat-sdk/wallet-evm": "workspace:*",
+    "@goat-sdk/core": "workspace:*",
+    "viem": "catalog:",
+    "zod": "catalog:"
     },
     "peerDependencies": {
-        "@goat-sdk/wallet-evm": "workspace:*",
-        "viem": "catalog:"
+      "@goat-sdk/wallet-evm": "workspace:*",
+      "@goat-sdk/core": "workspace:*",
+      "viem": "catalog:"
     },
-    "homepage": "https://ohmygoat.dev",
+  "homepage": "https://ohmygoat.dev",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/goat-sdk/goat.git"

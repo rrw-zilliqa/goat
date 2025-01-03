@@ -3,6 +3,9 @@ import { type WalletClient as ViemWalletClient, encodeFunctionData, formatUnits,
 import { mainnet } from "viem/chains";
 import { normalize } from "viem/ens";
 import { eip712WalletActions, getGeneralPaymasterInput } from "viem/zksync";
+import { z } from "zod";
+import { Chain, type ToolBase, createTool } from "@goat-sdk/core";
+
 
 export type ViemOptions = {
     paymaster?: {
@@ -40,6 +43,35 @@ export class ViemEVMWalletClient extends EVMWalletClient {
             type: "evm" as const,
             id: this.#client.chain?.id ?? 0,
         };
+    }
+
+    getCoreTools(): ToolBase[] {
+        return [
+            createTool(
+                {
+                    name: "get_address",
+                    description: "Get the address of the wallet",
+                    parameters: z.object({}),
+                },
+                () => this.getAddress(),
+            ),
+            createTool(
+                {
+                    name: "get_chain",
+                    description: "Get the chain of the wallet",
+                    parameters: z.object({}),
+                },
+                () => this.getChain(),
+            ),
+            createTool(
+                {
+                    name: "get_balance",
+                    description: "Get the balance of the wallet",
+                    parameters: z.object({ address: z.string() }),
+                },
+                (parameters) => this.balanceOf(parameters.address),
+            ),
+        ];
     }
 
     async resolveAddress(address: string) {

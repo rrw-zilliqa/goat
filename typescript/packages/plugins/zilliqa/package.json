@@ -23,6 +23,8 @@
     },
     "peerDependencies": {
         "@goat-sdk/core": "workspace:*",
+        "@goat-sdk/wallet-evm": "workspace:*",
+        "@goat-sdk/wallet-zilliqa": "workspace:*",
         "viem": "catalog:"
     },
     "homepage": "https://zilliqa.com",

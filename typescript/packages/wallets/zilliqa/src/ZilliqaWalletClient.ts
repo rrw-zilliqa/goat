@@ -1,5 +1,5 @@
 // import { type EVMReadRequest, type EVMTransaction, type EVMTypedData, EVMWalletClient } from "@goat-sdk/wallet-evm";
-import { Balance, Chain, Signature, WalletClientBase } from "@goat-sdk/core";
+import { Balance, Chain, Signature, WalletClientBase, type ToolBase } from "@goat-sdk/core";
 import { ViemEVMWalletClient } from "@goat-sdk/wallet-viem";
 import { ViemOptions } from "@goat-sdk/wallet-viem";
 import { Account, Wallet } from "@zilliqa-js/account";
@@ -34,6 +34,10 @@ export class ZilliqaWalletClient extends WalletClientBase {
     getAddress(): string {
         return this.viem.getAddress();
     }
+
+     getCoreTools(): ToolBase[] {
+        return this.viem.getCoreTools();
+     }
 
     // We have to return "evm" here because that is what getChain()
     // requires and it is necessary to enable plugins that expect us
