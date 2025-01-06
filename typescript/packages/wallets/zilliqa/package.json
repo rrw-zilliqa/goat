@@ -1,6 +1,6 @@
 {
-    "name": "@goat-sdk/wallet-viem",
-    "version": "0.2.4",
+    "name": "@goat-sdk/wallet-zilliqa",
+    "version": "0.2.3",
     "sideEffects": false,
     "files": ["dist/**/*", "README.md", "package.json"],
     "scripts": {
@@ -12,15 +12,19 @@
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
     "dependencies": {
-        "@goat-sdk/wallet-evm": "workspace:*",
         "@goat-sdk/core": "workspace:*",
+        "@goat-sdk/wallet-evm": "workspace:*",
+        "@goat-sdk/wallet-viem": "workspace:*",
+        "@zilliqa-js/account": "3.5.0",
+        "@zilliqa-js/zilliqa": "3.5.0",
+        "abitype": "^1.0.8",
         "viem": "catalog:",
         "zod": "catalog:"
     },
     "peerDependencies": {
-        "@goat-sdk/wallet-evm": "workspace:*",
         "@goat-sdk/core": "workspace:*",
-        "viem": "catalog:"
+        "@goat-sdk/wallet-evm": "workspace:*",
+        "@goat-sdk/wallet-viem": "workspace:*"
     },
     "homepage": "https://ohmygoat.dev",
     "repository": {
