@@ -14,12 +14,6 @@ export type ZilliqaBalanceExtraFields = {
 
 export type ZilliqaBalance = Balance & ZilliqaBalanceExtraFields;
 
-// Some of these action names are unnecessarily long - this is because
-// eliza does some fancy partial matching when selecting an action
-// name; if we don't name them very explicitly, the EVM names get
-// picked even when the controlling intelligence is trying to run the
-// Zilliqa functions and we end up with unexpected errors at the agent
-// level.
 export class ZilliqaService {
     @Tool({
         description: "Converts addresses from hex to bech32 format",
