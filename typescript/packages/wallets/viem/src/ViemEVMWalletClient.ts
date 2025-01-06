@@ -1,11 +1,10 @@
+import { Chain, type ToolBase, createTool } from "@goat-sdk/core";
 import { type EVMReadRequest, type EVMTransaction, type EVMTypedData, EVMWalletClient } from "@goat-sdk/wallet-evm";
 import { type WalletClient as ViemWalletClient, encodeFunctionData, formatUnits, publicActions } from "viem";
 import { mainnet } from "viem/chains";
 import { normalize } from "viem/ens";
 import { eip712WalletActions, getGeneralPaymasterInput } from "viem/zksync";
 import { z } from "zod";
-import { Chain, type ToolBase, createTool } from "@goat-sdk/core";
-
 
 export type ViemOptions = {
     paymaster?: {

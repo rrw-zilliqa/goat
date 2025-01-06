@@ -5,8 +5,7 @@ import { fromBech32Address, toBech32Address, toChecksumAddress } from "@zilliqa-
 import { BN, Long, units as ZilliqaUnits, validation as ZilliqaValidation } from "@zilliqa-js/util";
 import { Zilliqa } from "@zilliqa-js/zilliqa";
 import * as viem from "viem";
-import { AddressParameters, SayHelloParameters, TransferParameters } from "./parameters";
-import { ZilliqaPluginParams } from "./types";
+import { AddressParameters, TransferParameters } from "./parameters";
 
 export type ZilliqaBalanceExtraFields = {
     nonce: string;
@@ -38,7 +37,7 @@ export class ZilliqaService {
 
     @Tool({
         description:
-            "Transfers ZIL from an EVM address to another EVM or Zilliqa address, in either hex or bech32 format. Never use any other transfer functions when transferring funds from an EVM address",
+            "Transfer ZIL from an EVM address to another EVM or Zilliqa address, in either hex or bech32 format.",
     })
     async transferFromEvmAddress(
         zilliqa: ZilliqaWalletClient,
@@ -50,7 +49,7 @@ export class ZilliqaService {
                 : transferParameters.toAddress;
             const summed = viem.getAddress(hexToAddress);
             const amount = viem.parseEther(transferParameters.amount);
-            const tx = await zilliqa.viem.sendTransaction({
+            const tx = await zilliqa.getEVM().sendTransaction({
                 to: summed,
                 value: amount,
             });
@@ -62,7 +61,7 @@ export class ZilliqaService {
 
     @Tool({
         description:
-            "Transfers ZIL from a Zilliqa address to another EVM or Zilliqa address, in either hex or bech32 format. Never use any other transfer function when transferring fgunds from a Zilliqa address",
+            "Transfer ZIL from a Zilliqa address to another EVM or Zilliqa address, in either hex or bech32 format.",
     })
     async transferFromZilliqaAddress(
         zilliqa: ZilliqaWalletClient,
@@ -103,7 +102,7 @@ export class ZilliqaService {
 
     @Tool({
         description:
-            "Returns the balance of a bech32 address. A bech32 address starts with 'zil'. Can also return the balance of an ethereum address or EVM address which start with 0x",
+            "Return the balance of a bech32 address, or an EVM address. A bech32 address starts with 'zil'. An EVM address starts with '0x'",
     })
     async getZilliqaAddressBalance(
         zilliqa: ZilliqaWalletClient,

@@ -1,10 +1,28 @@
-// import { type EVMReadRequest, type EVMTransaction, type EVMTypedData, EVMWalletClient } from "@goat-sdk/wallet-evm";
-import { Balance, Chain, Signature, WalletClientBase, type ToolBase } from "@goat-sdk/core";
+//import { EVMWalletClient } from "@goat-sdk/wallet-evm";
+import { Balance, Chain, Signature, type ToolBase, WalletClientBase } from "@goat-sdk/core";
+import {
+    type EVMReadRequest,
+    type EVMReadResult,
+    type EVMTransaction,
+    type EVMTypedData,
+    EVMWalletClient,
+} from "@goat-sdk/wallet-evm";
 import { ViemEVMWalletClient } from "@goat-sdk/wallet-viem";
 import { ViemOptions } from "@goat-sdk/wallet-viem";
 import { Account, Wallet } from "@zilliqa-js/account";
 import { Zilliqa } from "@zilliqa-js/zilliqa";
 import { type WalletClient as ViemWalletClient } from "viem";
+
+export abstract class ZilliqaWalletClient extends WalletClientBase {
+    abstract getZilliqaChainId(): number;
+
+    // This is as close as we're going to get to an abstract interface for the moment;
+    // when we add browser wallets, we will have to change this, but I'm reluctant
+    // to invent yet another Zilliqa-native transaction abstraction before we have to.
+    abstract getZilliqa(): Zilliqa;
+
+    abstract getEVM(): EVMWalletClient;
+}
 
 // Zilliqa has two APIs - EVM and native. The native API is provided by the Zilliqa object. For the EVM API,
 // we thunk down to viem.
@@ -12,7 +30,7 @@ import { type WalletClient as ViemWalletClient } from "viem";
 // We need to encapsulate, rather than extend ViemEVMWalletClient so that we can report our chain type correctly.
 // One day it would be nice to add the ability to use ZilPay client integration, but those libraries don't exist yet,
 // so we do this instead.
-export class ZilliqaWalletClient extends WalletClientBase {
+export class ZilliqaJSViemWalletClient extends ZilliqaWalletClient {
     zilliqa: Zilliqa;
     viem: ViemEVMWalletClient;
     chainId = 0;
@@ -35,9 +53,9 @@ export class ZilliqaWalletClient extends WalletClientBase {
         return this.viem.getAddress();
     }
 
-     getCoreTools(): ToolBase[] {
+    getCoreTools(): ToolBase[] {
         return this.viem.getCoreTools();
-     }
+    }
 
     // We have to return "evm" here because that is what getChain()
     // requires and it is necessary to enable plugins that expect us
@@ -58,6 +76,10 @@ export class ZilliqaWalletClient extends WalletClientBase {
         return this.viem.balanceOf(address);
     }
 
+    getEVM(): EVMWalletClient {
+        return this.viem;
+    }
+
     getZilliqa(): Zilliqa {
         return this.zilliqa;
     }
@@ -73,12 +95,12 @@ export async function zilliqaChainId(node: string) {
     return Number.parseInt((await tempZil.network.GetNetworkId())?.result);
 }
 
-export function zilliqaWallet(
+export function zilliqaJSViemWalletClient(
     client: ViemWalletClient,
     node: string,
     account: Account,
     chainId: number,
     options?: ViemOptions,
-) {
-    return new ZilliqaWalletClient(client, node, account, chainId, options);
+): ZilliqaWalletClient {
+    return new ZilliqaJSViemWalletClient(client, node, account, chainId, options);
 }

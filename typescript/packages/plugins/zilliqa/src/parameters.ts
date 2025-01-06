@@ -19,9 +19,3 @@ export class AddressParameters extends createToolParameters(
             .describe("An account address, which may be EVM or Zilliqa, encoded in either hex or bech32 format"),
     }),
 ) {}
-
-export class SayHelloParameters extends createToolParameters(
-    z.object({
-        greeting: z.string().describe("A greeting"),
-    }),
-) {}
