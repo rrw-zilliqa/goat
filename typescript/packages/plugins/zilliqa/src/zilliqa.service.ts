@@ -16,14 +16,14 @@ export type ZilliqaBalance = Balance & ZilliqaBalanceExtraFields;
 
 export class ZilliqaService {
     @Tool({
-        description: "Converts addresses from hex to bech32 format",
+        description: "Convert addresses from hex to bech32 format",
     })
     async convertToBech32(zilliqa: ZilliqaWalletClient, address: AddressParameters): Promise<string> {
         return toBech32Address(address.address);
     }
 
     @Tool({
-        description: "Converts addresses from bech32 to hex format",
+        description: "Convert addresses from bech32 to hex format",
     })
     async convertFromBech32(zilliqa: ZilliqaWalletClient, address: AddressParameters): Promise<string> {
         return fromBech32Address(address.address);
