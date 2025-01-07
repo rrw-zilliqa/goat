@@ -53,10 +53,6 @@ export class ZilliqaJSViemWalletClient extends ZilliqaWalletClient {
         return this.viem.getAddress();
     }
 
-    getCoreTools(): ToolBase[] {
-        return this.viem.getCoreTools();
-    }
-
     // We have to return "evm" here because that is what getChain()
     // requires and it is necessary to enable plugins that expect us
     // to be evm.
@@ -82,10 +78,6 @@ export class ZilliqaJSViemWalletClient extends ZilliqaWalletClient {
 
     getZilliqa(): Zilliqa {
         return this.zilliqa;
-    }
-
-    getViemClient(): ViemEVMWalletClient {
-        return this.viem;
     }
 }
 
