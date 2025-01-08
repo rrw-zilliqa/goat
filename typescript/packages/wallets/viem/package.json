@@ -13,13 +13,10 @@
     "types": "./dist/index.d.ts",
     "dependencies": {
         "@goat-sdk/wallet-evm": "workspace:*",
-        "@goat-sdk/core": "workspace:*",
-        "viem": "catalog:",
-        "zod": "catalog:"
+        "viem": "catalog:"
     },
     "peerDependencies": {
         "@goat-sdk/wallet-evm": "workspace:*",
-        "@goat-sdk/core": "workspace:*",
         "viem": "catalog:"
     },
     "homepage": "https://ohmygoat.dev",
